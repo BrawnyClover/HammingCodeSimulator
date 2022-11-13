@@ -1,0 +1,7 @@
+obj/
+bin/Debug/net7.0-windows/HammingCodeSimulator.deps.json
+bin/Debug/net7.0-windows/HammingCodeSimulator.dll
+bin/Debug/net7.0-windows/HammingCodeSimulator.pdb
+bin/Debug/net7.0-windows/HammingCodeSimulator.runtimeconfig.json
+HammingCodeSimulator.csproj
+HammingCodeSimulator.csproj.user

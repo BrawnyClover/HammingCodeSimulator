@@ -1,0 +1,94 @@
+﻿<Window x:Class="HammingCodeSimulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HammingCodeSimulator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <TextBlock Name="DebugBox" Padding="10">Debug</TextBlock>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2">
+            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <TextBox Name="flip_rate"  FontSize="50" TextAlignment="Center" TextChanged="flip_rate_TextChanged">0.1</TextBox>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3">
+            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <TextBlock Name="DebugBox2" Padding="10">Debug</TextBlock>
+        </Grid>
+        <Grid Grid.Row="5" Grid.ColumnSpan="3">
+            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <Button Grid.Column="0" Margin="20" Click="Generate_Click">Generate</Button>
+        </Grid>
+        <Grid Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="3">
+            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <Button Grid.Column="0" Margin="20" Click="Simulate_Click">Simulate</Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Grid.Column="0" Name="o1" Background="LightGray" FontSize="50" TextAlignment="Center">1</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Name="o2" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="2" Name="o3" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="3" Name="o4" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Name="o5" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Name="o6" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="2" Name="o7" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="3" Name="o8" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Name="o9" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" Name="o10" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="2" Name="o11" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="3" Name="o12" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Name="o13" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="1" Name="o14" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="2" Name="o15" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="3" Name="o16" FontSize="50" TextAlignment="Center"></TextBlock>
+        
+
+        
+        <!-- -->
+
+        <TextBlock Grid.Row="1" Grid.Column="4" Name="r1" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="5" Name="r2" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="6" Name="r3" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="7" Name="r4" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="4" Name="r5" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="5" Name="r6" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="6" Name="r7" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="7" Name="r8" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="4" Name="r9" Background="LightGray" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="5" Name="r10" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="6" Name="r11" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="7" Name="r12" FontSize="50" TextAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="4" Grid.Column="4" Name="r13" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="5" Name="r14" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="6" Name="r15" FontSize="50" TextAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="7" Name="r16" FontSize="50" TextAlignment="Center"></TextBlock>
+        
+
+    </Grid>
+</Window>
