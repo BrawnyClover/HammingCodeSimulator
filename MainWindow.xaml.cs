@@ -19,8 +19,6 @@ namespace HammingCodeSimulator
 {
     class BitInfo
     {
-        public TextBlock[] bitBlocks;
-        public TextBlock[] parityBlocks;
         public TextBlock[] blocks;
         public TextBlock DebugBox;
         public TextBlock DebugBox2;
@@ -28,12 +26,22 @@ namespace HammingCodeSimulator
         public int[] bitValue;
         public int[] parityValue;
 
-        int[] bitIndex = new int[] { 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15 };
+        public static int[] bitIndex = new int[] { 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15 };
+        public static int[] parityIndex = new int[] { 0, 1, 2, 4, 8 }; 
 
         public BitInfo()
         {
-            this.bitValue = new int[11];
-            this.parityValue = new int[5];
+            bitValue = new int[11];
+            parityValue = new int[5];
+        }
+
+        public static int getBitIndex(int bitIdx)
+        {
+            for(int i=0; i<bitIndex.Length; i++)
+            {
+                if (bitIdx == bitIndex[i]) return i;
+            }
+            return -1;
         }
         public void calcParity()
         {
@@ -56,18 +64,18 @@ namespace HammingCodeSimulator
         private void updateBitTextBlock()
         {
             int i = 0;
-            for (i = 0; i < bitValue.Length; i++)
+            for (i = 0; i < bitIndex.Length; i++)
             {
-                bitBlocks[i].Text = bitValue[i].ToString();
+                blocks[bitIndex[i]].Text = bitValue[i].ToString();
             }
         }
 
         private void updateParityTextBlock()
         {
             int i = 0;
-            for(i=0; i<parityBlocks.Length; i++)
+            for(i=0; i<parityIndex.Length; i++)
             {
-                parityBlocks[i].Text = parityValue[i].ToString();
+                blocks[parityIndex[i]].Text = parityValue[i].ToString();
             }
         }
 
@@ -101,9 +109,9 @@ namespace HammingCodeSimulator
             DebugBox2.Text = string.Join(",", checkResult);
             if (checksum == 0)
             {
-                foreach(TextBlock tb in bitBlocks)
+                foreach(int idx in bitIndex)
                 {
-                    tb.Background = Brushes.Green;
+                    blocks[idx].Background = Brushes.Green;
                 }
             }
 
@@ -127,9 +135,9 @@ namespace HammingCodeSimulator
                     //    DebugBox.Text = res1.ToString() + ", " + res2.ToString();
 
                     //}
-                    foreach (TextBlock tb in bitBlocks)
+                    foreach (int idx in bitIndex)
                     {
-                        tb.Background = Brushes.Crimson;
+                        blocks[idx].Background = Brushes.Crimson;
                         DebugBox.Text = "2 bit errors detected";
                     }
                 }
@@ -157,12 +165,7 @@ namespace HammingCodeSimulator
             sender = new BitInfo();
             receiver = new BitInfo();
 
-            sender.bitBlocks = new TextBlock[] { o4, o6, o7, o8, o10, o11, o12, o13, o14, o15, o16 };
-            sender.parityBlocks = new TextBlock[] { o1, o2, o3, o5, o9 };
             sender.blocks = new TextBlock[] { o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15 , o16};
-            
-            receiver.bitBlocks = new TextBlock[] { r4, r6, r7, r8, r10, r11, r12, r13, r14, r15, r16 };
-            receiver.parityBlocks = new TextBlock[] { r1, r2, r3, r5, r9 };
             receiver.blocks = new TextBlock[] { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16 };
             receiver.DebugBox = DebugBox;
             receiver.DebugBox2 = DebugBox2;
@@ -177,17 +180,17 @@ namespace HammingCodeSimulator
 
         private void Simulate_Click(object sender, RoutedEventArgs e)
         {
-            foreach(TextBlock tb in receiver.bitBlocks)
+            foreach(int idx in BitInfo.bitIndex)
             {
-                tb.Background = Brushes.White;
+                receiver.blocks[idx].Background = Brushes.White;
             }
-            foreach(TextBlock tb in receiver.parityBlocks)
+            foreach(int idx in BitInfo.parityIndex)
             {
-                tb.Background = Brushes.LightGray;
+                receiver.blocks[idx].Background = Brushes.LightGray;
             }
             flipCnt = 0;
-            this.receiver.bitValue = Flip_Bit(this.sender.bitValue, receiver.bitBlocks);
-            this.receiver.parityValue = Flip_Bit(this.sender.parityValue, receiver.parityBlocks);
+            receiver.bitValue = Flip_Bit(this.sender.bitValue);
+            receiver.parityValue = Flip_Bit(this.sender.parityValue);
             receiver.updateTextBlock();
 
             receiver.checkParity();
@@ -196,16 +199,16 @@ namespace HammingCodeSimulator
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
             Random rand = new Random();
-            for(int i=0; i<this.sender.bitBlocks.Length; i++)
+            foreach(int idx in BitInfo.bitIndex)
             {
                 int value = rand.Next(0, 2);
-                this.sender.bitBlocks[i].Text = value.ToString();
-                this.sender.bitValue[i] = (value);
+                this.sender.blocks[idx].Text = value.ToString();
+                this.sender.bitValue[BitInfo.getBitIndex(idx)] = (value);
             }
             this.sender.calcParity();
         }
 
-        private int[] Flip_Bit(int[] value, TextBlock[] blocks)
+        private int[] Flip_Bit(int[] value)
         {
             Random rand = new Random();
             int prob = (int)(flip_rate_value * 100);
@@ -222,7 +225,6 @@ namespace HammingCodeSimulator
                     if (flipRes < prob)
                     {
                         retVal[i] = 1 - value[i];
-                        blocks[i].Background = Brushes.LightPink;
                         flipCnt++;
                     }
                     else retVal[i] = value[i];
